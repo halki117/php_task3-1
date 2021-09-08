@@ -56,8 +56,13 @@ $dsn = 'mysql:dbname=php_task3;host=localhost;charset=utf8';
   //プレースホルダに値をセットし、SQL文を実行
   $stmt->execute();
   
+  // データベースの全てのレコードを取得し $posts に格納。下記の投稿一覧部分で使用。 
+  $posts = $stmt->fetchAll() ;
+
   //レコードの件数を取得,下記の投稿一覧部分のif文の判定式にで使用する
   $count = $stmt->rowCount();
+
+  
   
 ?>
 
@@ -84,15 +89,14 @@ $dsn = 'mysql:dbname=php_task3;host=localhost;charset=utf8';
   <h2>投稿内容一覧</h2>
 
   <?php
-
     if($count){
       $i = 1 ;
-          while($data = $stmt->fetch()){ ?>
-      
+          foreach( $posts as $key=>$post ){ ?>
+
             <div class="post">
               <p >No: <?php echo $i ;?></p>
-              <p>名前: <?php echo $data['name']; ?></p>
-              <p>投稿内容: <?php echo $data['content'] ?></p>
+              <p>名前: <?php echo $post['name']; ?></p>
+              <p>投稿内容: <?php echo $post['content'] ?></p>
             </div>
       
             <?php $i++; ?>
